@@ -1,0 +1,40 @@
+<div class="container-fluid resume">
+    <div class="row">
+        <div class="col-12 col-md-4 side border-right">
+            <section>
+                <img [src]='profilePic' alt="" class="profile-pic w-100 rounded-circle d-block">
+            </section>
+
+            <section>
+                <app-contact-info [resume]='resume'></app-contact-info>
+            </section>
+
+            <section>
+                <h3 class="h6">Highlights</h3>
+                <app-skills [skills]='resume.skills'></app-skills>
+            </section>
+        </div>
+
+        <div class="col-12 col-md-8 body">
+            <section>
+                <h1 class="text-uppercase">{{ resume.name }}</h1>
+                <h2 class="h6 text-uppercase">{{ resume.jobTitle }}</h2>
+            </section>
+
+            <section>
+                <h3 class="h6">Profile</h3>
+                <p>{{ resume.summary }}</p>
+            </section>
+
+            <section class="education-history">
+                <h3 class="h6">Education</h3>
+                <app-education-history [education]='resume.education'></app-education-history>
+            </section>
+
+            <section class="work-history">
+                <h3 class="h6">Work experience</h3>
+                <app-work-history [work]='resume.work'></app-work-history>
+            </section>
+        </div>
+    </div>
+</div>

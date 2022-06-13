@@ -1,0 +1,7 @@
+<ul class="list-unstyled">
+    <li *ngFor="let cert of certifications" class="mb-2">
+        <strong>{{ cert.name }}</strong>
+        <br>
+        <span *ngIf="cert.acquired">{{ cert.acquired }}</span>
+    </li>
+</ul>

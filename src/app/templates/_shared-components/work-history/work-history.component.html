@@ -1,0 +1,10 @@
+<ng-container *ngFor="let entry of work">
+    <div class="mb-4" *ngIf="entry.position">
+        <strong>{{ entry.position }} / {{ entry.company.name }}</strong>
+        <br>
+        {{ entry.company.address }}
+        <br>
+        <div>{{ entry.description }}</div>
+        {{ entry.duration.from }} - {{ entry.duration.to }}
+    </div>
+</ng-container>

@@ -1,0 +1,65 @@
+@import "~bootstrap-scss/bootstrap";
+
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+button + button,
+a + button,
+button + a {
+    margin-left: 14px !important;
+}
+
+main {
+    .mat-stepper-horizontal,
+    .mat-stepper-vertical {
+        background-color: transparent;
+
+        .mat-horizontal-stepper-header {
+            height: auto;
+            margin-bottom: 35px;
+            padding: 0 15px;
+        }
+
+        .mat-horizontal-stepper-header .mat-step-icon {
+            margin-right: 6px;
+        }
+
+        .mat-step-header .mat-step-icon {
+            background-color: transparent;
+        }
+
+        .mat-step-header .mat-step-icon,
+        .mat-step-header .mat-step-label {
+            color: #333;
+        }
+
+        .mat-step-header .mat-step-label.mat-step-label-selected,
+        .mat-step-header .mat-step-icon-selected,
+        .mat-step-header .mat-step-icon-state-done,
+        .mat-step-header .mat-step-icon-state-edit {
+            color: #c2185b;
+        }
+    }
+}
+
+section + section {
+    margin-top: 35px;
+}
+
+.s-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    mat-icon,
+    span {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}

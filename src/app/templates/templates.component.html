@@ -1,0 +1,9 @@
+<div class="template-container">
+    <ul class="list-unstyled">
+        <li (click)="selectTemplate(template)" [ngClass]='{ "selected": selectedTemplate === i }'
+            *ngFor="let template of templates; let i = index">
+            {{ template.name }}
+            <img class="rounded shadow-sm" [src]='template.thumbnail' alt="">
+        </li>
+    </ul>
+</div>

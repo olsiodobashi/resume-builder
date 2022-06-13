@@ -1,0 +1,16 @@
+<ul class="list-unstyled">
+    <li *ngFor="let skill of skills" class="mb-2">
+
+        <div [ngSwitch]="type">
+            <div *ngSwitchCase="'progress-bar'">
+                <span>{{ skill.name }}</span>
+                <mat-progress-bar mode="determinate" [value]='skill.value'></mat-progress-bar>
+            </div>
+            <div *ngSwitchDefault>
+                <!-- When no value is passed then use as Highlights section -->
+                <span>{{ skill.name }}</span>
+                <!-- <span *ngIf="skill.value">{{ skill.value }}</span> -->
+            </div>
+        </div>
+    </li>
+</ul>

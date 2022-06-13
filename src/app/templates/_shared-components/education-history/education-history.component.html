@@ -1,0 +1,9 @@
+<div>
+    <div *ngFor="let entry of education" class="mb-4">
+        <strong>{{ entry.institutionName }}</strong>
+        <br>
+        {{ entry.degree }}
+        <br>
+        {{ entry.duration.from }} - {{ entry.duration.to }}
+    </div>
+</div>

@@ -1,0 +1,40 @@
+$primary: #98a7ba;
+
+.resume {
+    border-top: 30px solid $primary;
+    font-size: 14px;
+    padding-bottom: 60px;
+    padding-top: 60px;
+}
+
+.side {
+    padding-right: 30px;
+}
+
+.body {
+    padding-left: 30px;
+    border-left: 1px solid $primary;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: $primary;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+}
+
+@media print {
+    .side {
+        float: left;
+        max-width: 250px;
+    }
+
+    .body {
+        float: right;
+        max-width: calc(100% - 250px);
+    }
+}

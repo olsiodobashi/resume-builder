@@ -1,0 +1,44 @@
+$primary: #b13a20;
+
+.resume {
+    font-size: 14px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+.side {
+    padding-right: 30px;
+    padding-top: 20px;
+    border-top: 1px solid;
+}
+
+.body {
+    padding-left: 30px;
+    border-left: 1px solid;
+    border-top: 1px solid;
+    padding-top: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: $primary;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+    border-bottom: 1px dashed lightgray;
+}
+
+@media print {
+    .side {
+        float: left;
+        max-width: 250px;
+    }
+
+    .body {
+        float: right;
+        max-width: calc(100% - 250px);
+    }
+}

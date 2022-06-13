@@ -1,0 +1,412 @@
+<form [formGroup]='resumeForm' (ngSubmit)='onSubmit()'>
+    <mat-stepper #stepper>
+        <mat-step>
+            <mat-card>
+                <div mat-card-content class="d-flex flex-column form-container">
+                    <ng-template matStepLabel>About you</ng-template>
+
+                    <h3>About you</h3>
+                    <div class="row align-items-center mb-3">
+                        <div class="col-12 col-md-6">
+                            <div>Profile picture</div>
+                            <input type="file" (change)="onProfilePicUpload($event)">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <img class="profile-pic" [src]='profilePic' alt="" *ngIf="profilePic">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Full name</mat-label>
+                                <input matInput placeholder="Last name, First name" formControlName="name" required>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Job title</mat-label>
+                                <input matInput placeholder="Last name, First name" formControlName="jobTitle">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Location / Address</mat-label>
+                                <input matInput placeholder="Location" formControlName="location">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Email</mat-label>
+                                <input matInput placeholder="Email" formControlName="email">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Summary</mat-label>
+                        <textarea matInput placeholder="About you" formControlName="summary" required></textarea>
+                    </mat-form-field>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Birthday</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="birthday">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Phone number</mat-label>
+                                <input matInput placeholder="Phone number" formControlName="phoneNumber">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-auto">
+                        <button type="button" mat-raised-button matStepperNext color="primary">Next</button>
+                    </div>
+                </div>
+            </mat-card>
+        </mat-step>
+
+        <mat-step>
+            <mat-card>
+                <div mat-card-content class="d-flex flex-column form-container">
+                    <ng-template matStepLabel>Education</ng-template>
+
+                    <h3>Education</h3>
+
+                    <ng-container formArrayName="education">
+                        <ng-container *ngFor="let entry of educationArray.controls; let i = index">
+                            <div [formGroup]='entry'>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>Institution name</mat-label>
+                                            <input formControlName="institutionName" matInput required>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>Degree</mat-label>
+                                            <input formControlName="degree" matInput required>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row" formGroupName="duration">
+                                    <div class="col-12">Duration</div>
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>From</mat-label>
+                                            <input formControlName="from" matInput
+                                                placeholder="07/2020, Jul 2015, 2019, etc." required>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>To</mat-label>
+                                            <input formControlName="to" matInput
+                                                placeholder="07/2020, Jul 2015, 2019, etc." required>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+                        </ng-container>
+                    </ng-container>
+
+                    <div class="add-btn text-center">
+                        <button type="button" mat-stroked-button (click)="addFormArray('education')">&plus;
+                            Education</button>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-auto">
+                        <button type="button" mat-button matStepperPrevious>Back</button>
+                        <button type="button" mat-raised-button matStepperNext color="primary">Next</button>
+                    </div>
+                </div>
+            </mat-card>
+        </mat-step>
+
+        <mat-step>
+            <mat-card>
+                <div mat-card-content class="d-flex flex-column form-container">
+                    <ng-template matStepLabel>Work Experience</ng-template>
+
+                    <h3>Work</h3>
+                    <ng-container formArrayName="work">
+                        <ng-container *ngFor="let entry of workArray.controls; let i = index">
+                            <div [formGroup]='entry'>
+                                <div formGroupName="company">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Company name</mat-label>
+                                                <input formControlName="name" matInput placeholder="Google Inc."
+                                                    required>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-12 col-md-6">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Address</mat-label>
+                                                <input formControlName="address" matInput
+                                                    placeholder="Ex. 1 Main St, New York, NY" required>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Reference</mat-label>
+                                                <input formControlName="reference" matInput placeholder="Jane Joe">
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-12 col-md-6">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Reference phone number</mat-label>
+                                                <input formControlName="phoneNumber" matInput>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Position</mat-label>
+                                    <input formControlName="position" matInput required>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Description</mat-label>
+                                    <textarea formControlName="description" matInput required></textarea>
+                                </mat-form-field>
+
+                                <div class="row" formGroupName="duration">
+                                    <div class="col-12">Duration</div>
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>From</mat-label>
+                                            <input formControlName="from" matInput
+                                                placeholder="07/2020, Jul 2015, 2019, etc." required type="text">
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>To</mat-label>
+                                            <input formControlName="to" matInput
+                                                placeholder="07/2020, Jul 2015, 2019, etc." required type="text">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+                        </ng-container>
+                    </ng-container>
+
+                    <div class="add-btn text-center">
+                        <button type="button" mat-icon-button (click)="addFormArray('work')">&plus; Work</button>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-auto">
+                        <button type="button" mat-button matStepperPrevious>Back</button>
+                        <button type="button" mat-raised-button matStepperNext color="primary">Next</button>
+                    </div>
+                </div>
+            </mat-card>
+        </mat-step>
+
+        <mat-step>
+            <mat-card>
+                <div mat-card-content class="d-flex flex-column form-container">
+                    <ng-template matStepLabel>Skills &amp; Certifications</ng-template>
+
+                    <div>
+                        <h3>Skills</h3>
+                        <ng-container formArrayName="skills">
+                            <ng-container *ngFor="let skill of skillsArray.controls; let i = index">
+                                <div [formGroup]='skill'>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Name</mat-label>
+                                                <input formControlName="name" matInput required>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-12 col-md-6">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Proficiency (0-100)</mat-label>
+                                                <input formControlName="value" matInput required type="number">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+                            </ng-container>
+                        </ng-container>
+                        <div class="add-btn text-center">
+                            <button type="button" mat-icon-button (click)="addFormArray('skills')">&plus;
+                                Skill</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3>Certifications</h3>
+                        <ng-container formArrayName="certifications">
+                            <ng-container *ngFor="let entry of certificationsArray.controls; let i = index">
+                                <div [formGroup]='entry'>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Title</mat-label>
+                                                <input formControlName="name" matInput>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <!-- TODO Should be date picker -->
+                                        <div class="col-12 col-md-6">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Acquired</mat-label>
+                                                <input formControlName="acquired" matInput
+                                                    placeholder="07/2020, Jul 2015, 2019, etc.">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+                            </ng-container>
+                        </ng-container>
+                        <div class="add-btn text-center">
+                            <button type="button" mat-icon-button (click)="addFormArray('certifications')">&plus;
+                                Link</button>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-auto">
+                        <button type="button" mat-button matStepperPrevious>Back</button>
+                        <button type="button" mat-raised-button matStepperNext color="primary">Next</button>
+                    </div>
+                </div>
+            </mat-card>
+        </mat-step>
+
+        <mat-step>
+            <mat-card>
+                <div mat-card-content class="d-flex flex-column form-container">
+                    <ng-template matStepLabel>Social &amp; Hobbies</ng-template>
+
+                    <div>
+                        <h3>Social links</h3>
+                        <ng-container formArrayName="socialLinks">
+                            <ng-container *ngFor="let entry of socialLinksArray.controls; let i = index">
+                                <div [formGroup]='entry'>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Name</mat-label>
+                                                <input formControlName="title" matInput
+                                                    placeholder="Ex. 1 Main St, New York, NY" required>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-12 col-md-6">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>URL</mat-label>
+                                                <input formControlName="url" matInput
+                                                    placeholder="Ex. 1 Main St, New York, NY" required>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+                            </ng-container>
+                        </ng-container>
+                        <div class="add-btn text-center">
+                            <button type="button" mat-icon-button (click)="addFormArray('socialLinks')">&plus;
+                                Link</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3>Hobbies</h3>
+                        <ng-container formArrayName="hobbies">
+                            <ng-container *ngFor="let entry of hobbiesArray.controls; let i = index">
+                                <div [formGroup]='entry'>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Name</mat-label>
+                                                <input formControlName="title" matInput
+                                                    placeholder="Ex. 1 Main St, New York, NY">
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-12 col-md-6">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Description</mat-label>
+                                                <input formControlName="description" matInput
+                                                    placeholder="Ex. 1 Main St, New York, NY">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+                            </ng-container>
+                        </ng-container>
+
+                        <div class="add-btn text-center">
+                            <button type="button" mat-icon-button (click)="addFormArray('hobbies')">&plus;
+                                Hobby</button>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-auto">
+                        <button type="button" mat-button matStepperPrevious>Back</button>
+                        <button type="button" mat-raised-button matStepperNext color="primary">Next</button>
+                    </div>
+                </div>
+            </mat-card>
+        </mat-step>
+
+        <mat-step>
+            <mat-card>
+                <div mat-card-content class="d-flex flex-column form-container">
+                    <ng-template matStepLabel>Done</ng-template>
+
+                    <h3>Done</h3>
+                    <div class="row justify-content-center">
+                        <p>In the next screen you will be able to choose a template for your resume.</p>
+                        <p>After that you can download it to your computer.</p>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-auto">
+                        <button type="button" mat-button color="accent" (click)="reset(stepper)">Reset</button>
+                        <button type="button" mat-button matStepperPrevious>Back</button>
+                        <button mat-raised-button color="primary" type="submit">Choose template</button>
+                    </div>
+                </div>
+            </mat-card>
+        </mat-step>
+
+        <button mat-button matStepperNext color="primary">Next</button>
+    </mat-stepper>
+</form>
