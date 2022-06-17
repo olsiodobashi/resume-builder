@@ -1,1 +1,46 @@
-<p>classic-three works!</p>
+<div class="resume">
+    <header class="container-fluid py-4">
+        <div class="row">
+            <div class="col-9 text-start">
+                <h1 class="text-white border-0">{{ resume.name }}</h1>
+                <h2 class="h4 border-0 text-orange">{{ resume.jobTitle }}</h2>
+                <p class="text-white">{{ resume.summary }}</p>
+            </div>
+
+            <div class="col-3">
+                <img [src]='profilePic' alt="" class="profile-pic w-100 rounded-circle d-block">
+            </div>
+        </div>
+    </header>
+
+    <div class="text-start text-white px-4 py-2 contact-section">
+        <app-contact-info [inline]='true' [resume]='resume'></app-contact-info>
+    </div>
+
+    <div class="container-fluid text-start mt-5">
+        <div class="row">
+            <div class="col-7 body">
+                <section class="work-history">
+                    <h3 class="section-title">Work experience</h3>
+                    <app-work-history [work]='resume.work'></app-work-history>
+                </section>
+                <section class="education-history" [ngClass]='{ "page-break-before": resume.education.length > 2 }'>
+                    <h3 class="section-title">Education</h3>
+                    <app-education-history [education]='resume.education'></app-education-history>
+                </section>
+            </div>
+
+            <div class="col-5 side border-right">
+                <section>
+                    <h3 class="section-title">Skills</h3>
+                    <app-skills [skills]='resume.skills' [type]='"progress-bar"'></app-skills>
+                </section>
+
+                <section *ngIf="resume.certifications && resume.certifications[0].name">
+                    <h3 class="section-title">Certifications</h3>
+                    <app-certifications [certifications]='resume.certifications'></app-certifications>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

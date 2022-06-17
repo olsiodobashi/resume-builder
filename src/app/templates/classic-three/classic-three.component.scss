@@ -1,0 +1,21 @@
+$primary: #f44e42;
+
+header {
+    background-color: #374456;
+}
+
+.contact-section {
+    background-color: #2c343f;
+}
+
+.section-title {
+    border-bottom: 2px solid;
+    color: $primary;
+    display: inline-block;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.text-orange {
+    color: $primary;
+}

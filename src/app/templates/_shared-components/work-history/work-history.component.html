@@ -2,9 +2,9 @@
     <div class="mb-4" *ngIf="entry.position">
         <strong>{{ entry.position }} / {{ entry.company.name }}</strong>
         <br>
-        {{ entry.company.address }}
+        <small>{{ entry.duration.from }} - {{ entry.duration.to }}</small>
         <br>
+        <div class="mt-2">{{ entry.company.address }}</div>
         <div>{{ entry.description }}</div>
-        {{ entry.duration.from }} - {{ entry.duration.to }}
     </div>
 </ng-container>

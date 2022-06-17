@@ -20,7 +20,7 @@ export class TemplatesComponent implements OnInit {
 
     ngOnInit(): void {
         // Always select first template
-        this.templateSelected.emit(this.templates[0]);
+        this.templateSelected.emit(this.templates[2]);
     }
 
     public selectTemplate(template: TemplateModel): void {

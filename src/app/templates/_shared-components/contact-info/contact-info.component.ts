@@ -11,6 +11,9 @@ export class ContactInfoComponent implements OnInit {
     @Input()
     public resume: ResumeModel;
 
+    @Input()
+    public inline: boolean;
+
     constructor() { }
 
     ngOnInit(): void {

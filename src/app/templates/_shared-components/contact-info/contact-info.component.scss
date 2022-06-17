@@ -4,3 +4,11 @@ $primary: #98a7ba;
     color: $primary;
     margin-right: 5px;
 }
+
+.list-inline li {
+    display: inline-block;
+
+    + li {
+        margin-left: 10px;
+    }
+}
