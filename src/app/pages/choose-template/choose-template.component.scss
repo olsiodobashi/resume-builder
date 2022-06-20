@@ -1,11 +1,22 @@
 .resume-container {
     border: 1px solid lightgray;
     max-width: 860px;
+    margin-bottom: 40px;
 }
 
 .template-list {
-    height: 93vh;
+    background-color: lightblue;
+    height: 100vh;
     left: 0;
     overflow-y: auto;
-    position: fixed;
+    position: sticky;
+    top: 0;
+}
+
+footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    background-color: lightblue;
 }
