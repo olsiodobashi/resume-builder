@@ -8,12 +8,12 @@
 
                         <h3>About you</h3>
                         <div class="row align-items-center mb-3">
-                            <div class="col-12 col-md-6">
+                            <div class="col-12">
+                                <img class="profile-pic" [src]='profilePic' alt="" *ngIf="profilePic">
+                            </div>
+                            <div class="col-12">
                                 <div>Profile picture</div>
                                 <input type="file" (change)="onProfilePicUpload($event)">
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <img class="profile-pic" [src]='profilePic' alt="" *ngIf="profilePic">
                             </div>
                         </div>
                         <div class="row">
@@ -85,46 +85,55 @@
                         <h3>Education</h3>
 
                         <ng-container formArrayName="education">
-                            <ng-container *ngFor="let entry of educationArray.controls; let i = index">
-                                <div [formGroup]='entry'>
-                                    <div class="row">
-                                        <div class="col-12 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                                <mat-label>Institution name</mat-label>
-                                                <input formControlName="institutionName" matInput required>
-                                            </mat-form-field>
+                            <div class="row">
+
+                                <ng-container *ngFor="let entry of educationArray.controls; let i = index">
+                                    <div class="col-6" [formGroup]='entry'>
+                                        <div class="card mb-4">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-12 col-md-6">
+                                                        <mat-form-field appearance="outline" class="w-100">
+                                                            <mat-label>Institution name</mat-label>
+                                                            <input formControlName="institutionName" matInput required>
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-6">
+                                                        <mat-form-field appearance="outline" class="w-100">
+                                                            <mat-label>Degree</mat-label>
+                                                            <input formControlName="degree" matInput required>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" formGroupName="duration">
+                                                    <div class="col-12">Duration</div>
+                                                    <div class="col-12 col-md-6">
+                                                        <mat-form-field appearance="outline" class="w-100">
+                                                            <mat-label>From</mat-label>
+                                                            <input formControlName="from" matInput
+                                                                placeholder="07/2020, Jul 2015, 2019, etc." required>
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-6">
+                                                        <mat-form-field appearance="outline" class="w-100">
+                                                            <mat-label>To</mat-label>
+                                                            <input formControlName="to" matInput
+                                                                placeholder="07/2020, Jul 2015, 2019, etc." required>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <button *ngIf="educationArray.length > 1" class="remove-control-button"
+                                                    (click)="removeControl('education', i)">remove</button>
+                                            </div>
                                         </div>
 
-                                        <div class="col-12 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                                <mat-label>Degree</mat-label>
-                                                <input formControlName="degree" matInput required>
-                                            </mat-form-field>
-                                        </div>
                                     </div>
 
-                                    <div class="row" formGroupName="duration">
-                                        <div class="col-12">Duration</div>
-                                        <div class="col-12 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                                <mat-label>From</mat-label>
-                                                <input formControlName="from" matInput
-                                                    placeholder="07/2020, Jul 2015, 2019, etc." required>
-                                            </mat-form-field>
-                                        </div>
-
-                                        <div class="col-12 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                                <mat-label>To</mat-label>
-                                                <input formControlName="to" matInput
-                                                    placeholder="07/2020, Jul 2015, 2019, etc." required>
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <hr>
-                            </ng-container>
+                                </ng-container>
+                            </div>
                         </ng-container>
 
                         <div class="add-btn text-center">
@@ -145,78 +154,91 @@
                     <div mat-card-content class="d-flex flex-column form-container">
                         <ng-template matStepLabel>Work Experience</ng-template>
 
-                        <h3>Work</h3>
+                        <h3>Work Experience</h3>
                         <ng-container formArrayName="work">
-                            <ng-container *ngFor="let entry of workArray.controls; let i = index">
-                                <div [formGroup]='entry'>
-                                    <div formGroupName="company">
-                                        <div class="row">
-                                            <div class="col-12 col-md-6">
-                                                <mat-form-field appearance="outline" class="w-100">
-                                                    <mat-label>Company name</mat-label>
-                                                    <input formControlName="name" matInput placeholder="Google Inc."
-                                                        required>
-                                                </mat-form-field>
-                                            </div>
+                            <div class="row">
+                                <ng-container *ngFor="let entry of workArray.controls; let i = index">
 
-                                            <div class="col-12 col-md-6">
-                                                <mat-form-field appearance="outline" class="w-100">
-                                                    <mat-label>Address</mat-label>
-                                                    <input formControlName="address" matInput
-                                                        placeholder="Ex. 1 Main St, New York, NY" required>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
 
-                                        <div class="row">
-                                            <div class="col-12 col-md-6">
-                                                <mat-form-field appearance="outline" class="w-100">
-                                                    <mat-label>Reference</mat-label>
-                                                    <input formControlName="reference" matInput placeholder="Jane Joe">
-                                                </mat-form-field>
-                                            </div>
+                                    <div class="col-6" [formGroup]='entry'>
+                                        <div class="card mb-4">
+                                            <div class="card-body">
 
-                                            <div class="col-12 col-md-6">
+                                                <div formGroupName="company">
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-6">
+                                                            <mat-form-field appearance="outline" class="w-100">
+                                                                <mat-label>Company name</mat-label>
+                                                                <input formControlName="name" matInput
+                                                                    placeholder="Google Inc." required>
+                                                            </mat-form-field>
+                                                        </div>
+
+                                                        <div class="col-12 col-md-6">
+                                                            <mat-form-field appearance="outline" class="w-100">
+                                                                <mat-label>Address</mat-label>
+                                                                <input formControlName="address" matInput
+                                                                    placeholder="Ex. 1 Main St, New York, NY" required>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-6">
+                                                            <mat-form-field appearance="outline" class="w-100">
+                                                                <mat-label>Reference</mat-label>
+                                                                <input formControlName="reference" matInput
+                                                                    placeholder="Jane Joe">
+                                                            </mat-form-field>
+                                                        </div>
+
+                                                        <div class="col-12 col-md-6">
+                                                            <mat-form-field appearance="outline" class="w-100">
+                                                                <mat-label>Reference phone number</mat-label>
+                                                                <input formControlName="phoneNumber" matInput>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <mat-form-field appearance="outline" class="w-100">
-                                                    <mat-label>Reference phone number</mat-label>
-                                                    <input formControlName="phoneNumber" matInput>
+                                                    <mat-label>Position</mat-label>
+                                                    <input formControlName="position" matInput required>
                                                 </mat-form-field>
+
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>Description</mat-label>
+                                                    <textarea formControlName="description" matInput
+                                                        required></textarea>
+                                                </mat-form-field>
+
+                                                <div class="row" formGroupName="duration">
+                                                    <div class="col-12">Duration</div>
+                                                    <div class="col-12 col-md-6">
+                                                        <mat-form-field appearance="outline" class="w-100">
+                                                            <mat-label>From</mat-label>
+                                                            <input formControlName="from" matInput
+                                                                placeholder="07/2020, Jul 2015, 2019, etc." required
+                                                                type="text">
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-6">
+                                                        <mat-form-field appearance="outline" class="w-100">
+                                                            <mat-label>To</mat-label>
+                                                            <input formControlName="to" matInput
+                                                                placeholder="07/2020, Jul 2015, 2019, etc." required
+                                                                type="text">
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <button *ngIf="workArray.length > 1" class="remove-control-button"
+                                                    (click)="removeControl('work', i)">remove</button>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>Position</mat-label>
-                                        <input formControlName="position" matInput required>
-                                    </mat-form-field>
-
-                                    <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>Description</mat-label>
-                                        <textarea formControlName="description" matInput required></textarea>
-                                    </mat-form-field>
-
-                                    <div class="row" formGroupName="duration">
-                                        <div class="col-12">Duration</div>
-                                        <div class="col-12 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                                <mat-label>From</mat-label>
-                                                <input formControlName="from" matInput
-                                                    placeholder="07/2020, Jul 2015, 2019, etc." required type="text">
-                                            </mat-form-field>
-                                        </div>
-
-                                        <div class="col-12 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                                <mat-label>To</mat-label>
-                                                <input formControlName="to" matInput
-                                                    placeholder="07/2020, Jul 2015, 2019, etc." required type="text">
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <hr>
-                            </ng-container>
+                                </ng-container>
+                            </div>
                         </ng-container>
 
                         <div class="add-btn text-center">
@@ -239,27 +261,35 @@
                         <div>
                             <h3>Skills</h3>
                             <ng-container formArrayName="skills">
-                                <ng-container *ngFor="let skill of skillsArray.controls; let i = index">
-                                    <div [formGroup]='skill'>
-                                        <div class="row">
-                                            <div class="col-12 col-md-6">
-                                                <mat-form-field appearance="outline" class="w-100">
-                                                    <mat-label>Name</mat-label>
-                                                    <input formControlName="name" matInput required>
-                                                </mat-form-field>
-                                            </div>
+                                <div class="row">
+                                    <ng-container *ngFor="let skill of skillsArray.controls; let i = index">
+                                        <div class="col-6" [formGroup]='skill'>
+                                            <div class="card mb-4">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-6">
+                                                            <mat-form-field appearance="outline" class="w-100">
+                                                                <mat-label>Name</mat-label>
+                                                                <input formControlName="name" matInput required>
+                                                            </mat-form-field>
+                                                        </div>
 
-                                            <div class="col-12 col-md-6">
-                                                <mat-form-field appearance="outline" class="w-100">
-                                                    <mat-label>Proficiency (0-100)</mat-label>
-                                                    <input formControlName="value" matInput required type="number">
-                                                </mat-form-field>
+                                                        <div class="col-12 col-md-6">
+                                                            <mat-form-field appearance="outline" class="w-100">
+                                                                <mat-label>Proficiency (0-100)</mat-label>
+                                                                <input formControlName="value" matInput required
+                                                                    type="number">
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <button *ngIf="skillsArray.length > 1" class="remove-control-button"
+                                                        (click)="removeControl('skills', i)">remove</button>
+                                                </div>
+
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <hr>
-                                </ng-container>
+                                    </ng-container>
+                                </div>
                             </ng-container>
                             <div class="add-btn text-center">
                                 <button type="button" mat-icon-button (click)="addFormArray('skills')">&plus;
@@ -290,6 +320,9 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <button *ngIf="certificationsArray.length > 1" class="remove-control-button"
+                                        (click)="removeControl('certifications', i)">remove</button>
 
                                     <hr>
                                 </ng-container>
@@ -337,6 +370,9 @@
                                         </div>
                                     </div>
 
+                                    <button *ngIf="socialLinksArray.length > 1" class="remove-control-button"
+                                        (click)="removeControl('socialLinks', i)">remove</button>
+
                                     <hr>
                                 </ng-container>
                             </ng-container>
@@ -369,6 +405,9 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <button *ngIf="hobbiesArray.length > 1" class="remove-control-button"
+                                        (click)="removeControl('hobbies', i)">remove</button>
 
                                     <hr>
                                 </ng-container>

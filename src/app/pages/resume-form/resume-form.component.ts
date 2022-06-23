@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl, Form } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
-import { ResumeModel } from 'src/app/models/resume.model';
 import { FormService } from 'src/app/services/form.service';
 
 @Component({
@@ -14,6 +13,8 @@ export class ResumeFormComponent implements OnInit {
 
     public resumeForm: FormGroup;
     public profilePic: string | ArrayBuffer;
+
+    // TODO Refactor component
 
     constructor(
         private fb: FormBuilder,
@@ -33,22 +34,22 @@ export class ResumeFormComponent implements OnInit {
             location: [],
 
             education: this.fb.array(
-                this.educationFormGroup()
+                this.newFormGroup('education')
             ),
             work: this.fb.array(
-                this.workFormGroup()
+                this.newFormGroup('work')
             ),
             skills: this.fb.array(
-                this.skillsFormGroup()
+                this.newFormGroup('skills')
             ),
             certifications: this.fb.array(
-                this.certificationsFormGroup()
+                this.newFormGroup('certifications')
             ),
             socialLinks: this.fb.array(
-                this.socialLinksFormGroup()
+                this.newFormGroup('socialLinks')
             ),
             hobbies: this.fb.array(
-                this.hobbiesFormGroup()
+                this.newFormGroup('hobbies')
             )
         });
 
@@ -62,12 +63,12 @@ export class ResumeFormComponent implements OnInit {
             console.log(cachedFormData);
             this.resumeForm.patchValue(cachedFormData);
 
-            this.resumeForm.setControl('education', this.fb.array(this.educationFormGroup(cachedFormData.education)));
-            this.resumeForm.setControl('work', this.fb.array(this.workFormGroup(cachedFormData.work)));
-            this.resumeForm.setControl('skills', this.fb.array(this.skillsFormGroup(cachedFormData.skills)));
-            this.resumeForm.setControl('certifications', this.fb.array(this.certificationsFormGroup(cachedFormData.certifications)));
-            this.resumeForm.setControl('socialLinks', this.fb.array(this.socialLinksFormGroup(cachedFormData.socialLinks)));
-            this.resumeForm.setControl('hobbies', this.fb.array(this.hobbiesFormGroup(cachedFormData.hobbies)));
+            this.resumeForm.setControl('education', this.fb.array(this.newFormGroup('education', cachedFormData.education)));
+            this.resumeForm.setControl('work', this.fb.array(this.newFormGroup('work', cachedFormData.work)));
+            this.resumeForm.setControl('skills', this.fb.array(this.newFormGroup('skills', cachedFormData.skills)));
+            this.resumeForm.setControl('certifications', this.fb.array(this.newFormGroup('certifications', cachedFormData.certifications)));
+            this.resumeForm.setControl('socialLinks', this.fb.array(this.newFormGroup('socialLinks', cachedFormData.socialLinks)));
+            this.resumeForm.setControl('hobbies', this.fb.array(this.newFormGroup('hobbies', cachedFormData.hobbies)));
         }
     }
 
@@ -96,103 +97,22 @@ export class ResumeFormComponent implements OnInit {
     }
 
     public addFormArray<T>(name: string, value?: T[]): void {
-        let formArray: any;
-
-        switch (name) {
-            case 'education':
-                formArray = this.educationFormGroup(value);
-                break;
-            case 'work':
-                formArray = this.workFormGroup(value);
-                break;
-            case 'hobbies':
-                formArray = this.hobbiesFormGroup(value);
-                break;
-            case 'socialLinks':
-                formArray = this.socialLinksFormGroup(value);
-                break;
-            case 'skills':
-                formArray = this.skillsFormGroup(value);
-                break;
-            case 'certifications':
-                formArray = this.certificationsFormGroup(value);
-                break;
-            default:
-                break;
-        }
-
         (this.resumeForm.get(name) as FormArray).push(
             this.formService.newFormGroup(name)
         );
     }
 
-    public educationFormGroup(formData?: any): any[] {
-        if (formData) {
-            return formData.map(group =>
-                this.formService.newFormGroup('education', group)
-            );
-        } else {
-            return [this.formService.newFormGroup('education')];
-        }
+    public removeControl(name: string, index: number): void {
+        (this.resumeForm.controls[name] as FormArray).removeAt(index);
     }
 
-    public workFormGroup(formData?: any[]): any[] {
+    public newFormGroup(type: string, formData?: any): any[] {
         if (formData) {
             return formData.map(group =>
-                this.formService.newFormGroup('work', group)
+                this.formService.newFormGroup(type, group)
             );
         } else {
-            return [
-                this.formService.newFormGroup('work')
-            ];
-        }
-    }
-
-    public skillsFormGroup(formData?: any[]): any[] {
-        if (formData) {
-            return formData.map(group =>
-                this.formService.newFormGroup('skills', group)
-            );
-        } else {
-            return [
-                this.formService.newFormGroup('skills')
-            ];
-        }
-    }
-
-    public certificationsFormGroup(formData?: any[]): any[] {
-        if (formData) {
-            return formData.map(group =>
-                this.formService.newFormGroup('certifications', group)
-            );
-        } else {
-            return [
-                this.formService.newFormGroup('certifications')
-            ];
-        }
-    }
-
-    public hobbiesFormGroup(formData?: any[]): any[] {
-        if (formData) {
-            return formData.map(group =>
-                this.formService.newFormGroup('hobbies', group)
-            );
-        } else {
-            return [
-                this.formService.newFormGroup('hobbies')
-            ];
-        }
-    }
-
-    public socialLinksFormGroup(formData?: any[]): any[] {
-        if (formData) {
-            return formData.map(group =>
-                this.formService.newFormGroup('socialLinks', group)
-            );
-        } else {
-            return [
-                this.formService.newFormGroup('socialLinks')
-            ];
+            return [this.formService.newFormGroup(type)];
         }
     }
 
